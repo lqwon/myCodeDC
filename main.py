@@ -1,38 +1,16 @@
-from detectron2.checkpoint import DetectionCheckpointer
-from detectron2.engine import default_argument_parser, launch
-from detectron2.evaluation import verify_results
-from detectron2.utils import comm
+# 这是一个示例 Python 脚本。
 
-import src.data
-import src.modeling
-from src.engine import Trainer
-from src.utils import setup
+# 按 Shift+F10 执行或将其替换为您的代码。
+# 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
 
 
-def main(args):
-    cfg = setup(args)
-    if args.eval_only:
-        model = Trainer.build_model(cfg)
-        DetectionCheckpointer(model, save_dir=cfg.OUTPUT_DIR).resume_or_load(
-            cfg.MODEL.WEIGHTS, resume=args.resume
-        )
-        res = Trainer.test(cfg, model)
-        if comm.is_main_process():
-            verify_results(cfg, res)
-        return res
-
-    trainer = Trainer(cfg)
-    trainer.resume_or_load(resume=args.resume)
-    return trainer.train()
+def print_hi(name):
+    # 在下面的代码行中使用断点来调试脚本。
+    print(f'Hi, {name}')  # 按 Ctrl+F8 切换断点。
 
 
-if __name__ == "__main__":
-    args = default_argument_parser().parse_args()
-    launch(
-        main,
-        args.num_gpus,
-        num_machines=args.num_machines,
-        machine_rank=args.machine_rank,
-        dist_url=args.dist_url,
-        args=(args,),
-    )
+# 按装订区域中的绿色按钮以运行脚本。
+if __name__ == '__main__':
+    print_hi('PyCharm')
+
+# 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
